@@ -11,8 +11,7 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 public class GptServiceImpl implements GptService {
-    @Value("${openai.api-key}")
-    String apiKey;
+    String apiKey = System.getenv("OPENAI_API_KEY");
 
     @Value("${openai.base-url}")
     String baseUrl;
