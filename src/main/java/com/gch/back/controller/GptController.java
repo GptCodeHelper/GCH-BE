@@ -1,5 +1,7 @@
 package com.gch.back.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.gch.back.model.gpt.MessageVO;
 import com.gch.back.service.GptService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +17,7 @@ public class GptController {
     private final GptService gptService;
 
     @PostMapping("/chat")
-    public Mono<String> chat(@RequestBody String message) {
+    public Mono<String> chat(@RequestBody MessageVO message) throws JsonProcessingException {
         return gptService.getChatResponse(message);
     }
 }

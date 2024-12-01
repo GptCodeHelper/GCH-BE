@@ -43,6 +43,11 @@ dependencies {
 	// JSON 파싱
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 
+	// mac DNS resolver
+	// https://mvnrepository.com/artifact/io.netty/netty-resolver-dns-native-macos
+	runtimeOnly 'io.netty:netty-resolver-dns-native-macos:4.1.114.Final:osx-aarch_64'
+
+
 }
 
 tasks.named('test') {
