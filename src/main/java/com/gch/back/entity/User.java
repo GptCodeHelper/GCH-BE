@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class User extends BaseEntity{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_SEQ")
     private Integer userSeq;
 
