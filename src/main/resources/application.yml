@@ -2,6 +2,8 @@ server:
   port: 8081
 
 spring:
+  profiles:
+    include: oauth
   application:
     name: back
   # DB Link
@@ -17,14 +19,3 @@ spring:
     properties:
       hibernate:
         format-sql: true
-
-# Oauth
-jwt:
-  secret-key:
-
-oauth2:
-  kakao:
-    client-id:
-    url:
-      auth:
-      api:

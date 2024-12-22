@@ -1,6 +1,9 @@
 package com.gch.back.entity;
 
+import com.gch.back.dto.UserRole;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "USER_TB")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User extends BaseEntity{
 
     @Id
@@ -32,4 +37,7 @@ public class User extends BaseEntity{
     private String userYmd;
     @Column(name = "USER_CI")
     private String userCi;
+
+    @Column(name = "USER_ROLE")
+    private UserRole userRole;
 }
