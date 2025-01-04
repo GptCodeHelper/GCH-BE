@@ -1,17 +1,21 @@
-server:
-  port: 8080
-
 spring:
-  profiles:
-    include: oauth
   application:
     name: back
-  # DB Link
+
+  profiles:
+    group:
+      dev: dev
+      stg: stg
+      prd: prd
+
+  # Local Setting
+  # DB Link (local)
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/GCH_MGR?serverTimezone=UTC&characterEncoding=UTF-8
     username: GCH_MGR
     password: Jaehyun1!
+
   jpa:
     show-sql: true
     hibernate:
@@ -19,3 +23,6 @@ spring:
     properties:
       hibernate:
         format-sql: true
+
+server:
+  port: 8080
