@@ -23,4 +23,7 @@ public class Prob extends BaseEntity{
     @OneToMany(mappedBy = "prob")
     private List<Lan> lanProbs = new ArrayList<Lan>();
 
+    @OneToMany(mappedBy = "prob")
+    private List<ProbCon> probCons = new ArrayList<ProbCon>();
+
 }
