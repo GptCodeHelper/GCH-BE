@@ -1,0 +1,13 @@
+# Prd setting
+spring:
+  config:
+    active:
+      on-profile: prd
+  # DB Link (dev)
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/GCH_MGR?serverTimezone=UTC&characterEncoding=UTF-8
+    username: GCH_MGR
+    password: Jaehyun1!
+server:
+  port: 2345
