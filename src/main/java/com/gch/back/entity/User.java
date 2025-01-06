@@ -1,19 +1,23 @@
 package com.gch.back.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "USER_TB")
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class User extends BaseEntity{
 
     @Id
     @GeneratedValue
-    @Column(name = "USER_SEQ")
-    private Integer userSeq;
+    @Column(name = "USER_NO")
+    private Integer userNo;
 
 
     @Column(name = "USER_ID")
