@@ -1,6 +1,7 @@
 package com.gch.back.dto.common.detail;
 
 import com.gch.back.entity.User;
+import com.nimbusds.oauth2.sdk.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

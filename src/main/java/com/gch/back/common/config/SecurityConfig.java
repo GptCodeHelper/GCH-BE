@@ -2,7 +2,7 @@ package com.gch.back.common.config;
 
 import com.gch.back.common.jwt.filter.JwtVerifyFilter;
 import com.gch.back.common.config.handler.CommonLoginSuccessHandler;
-import com.gch.back.service.OAuth2UserService;
+import com.gch.back.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,7 @@ import java.util.List;
 @EnableMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final OAuth2UserService oAuth2UserService;
+    private final CustomOAuth2UserService oAuth2UserService;
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -71,7 +71,7 @@ public class SecurityConfig {
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.disable())
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer
                         .loginPage("/login/kakao")
-                        .successHandler(commonLoginSuccessHandler())
+                        .successHandler(commonLoginSuccessHandler()) // kakao sync에서 동의하고 시작하기 클릭 시 실행되는 handler
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(oAuth2UserService))
                 );
 

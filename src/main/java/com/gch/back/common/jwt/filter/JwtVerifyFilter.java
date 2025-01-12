@@ -21,15 +21,13 @@ import java.util.Map;
 
 @Slf4j
 public class JwtVerifyFilter extends OncePerRequestFilter {
-
-    // 상품 이미지가 보이지 않기에 상품 이미지를 출력하는 /api/items/view 경로를 추가
-    private static final String[] whitelist = {"/signUp", "/login/*" , "/refresh", "/", "/index.html"};
+    private static final String[] whitelist = {"/signUp", "/login/*" , "/refresh", "/", "/index"};
 
     private static void checkAuthorizationHeader(String header) {
-        if(header == null) {
-            throw new CustomJwtException("토큰이 전달되지 않았습니다");
+        if (header == null) {
+            throw new CustomJwtException("토큰이 전달되지 않았습니다.");
         } else if (!header.startsWith(JwtConstants.JWT_TYPE)) {
-            throw new CustomJwtException("BEARER 로 시작하지 않는 올바르지 않은 토큰 형식입니다");
+            throw new CustomJwtException("잘못되 JWT 토큰 형식입니다.");
         }
     }
 
@@ -41,7 +39,7 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException {
         log.info("--------------------------- JwtVerifyFilter ---------------------------");
 
         String authHeader = request.getHeader(JwtConstants.JWT_HEADER);

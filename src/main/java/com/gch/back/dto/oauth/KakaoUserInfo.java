@@ -4,15 +4,30 @@ import lombok.Data;
 
 import java.util.Map;
 
-@Data
-public class KakaoUserInfo {
-    private String socialId;
-    private Map<String, Object> account;
-    private Map<String, Object> profile;
-
+public class KakaoUserInfo extends OAuth2UserInfo {
     public KakaoUserInfo(Map<String, Object> attributes) {
-        socialId = String.valueOf(attributes.get("id"));
-        account = (Map<String, Object>) attributes.get("kakao_account");
-        profile = (Map<String, Object>) account.get("profile");
+        super(attributes);
+    }
+
+    @Override
+    public String getId() {
+        return String.valueOf(attributes.get("id"));
+    }
+
+    @Override
+    public String getNickname() {
+        Map<String, Object> account = (Map<String, Object>) attributes.get("kakao_account");
+
+        if (account == null) {
+            return null;
+        }
+
+        Map<String, Object> profile = (Map<String, Object>) account.get("profile");
+
+        if (profile == null) {
+            return null;
+        }
+
+        return (String) profile.get("nickname");
     }
 }

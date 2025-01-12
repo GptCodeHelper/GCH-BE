@@ -41,7 +41,7 @@ public class JwtUtils {
             throw new RuntimeException(e.getMessage());
         }
         return Jwts.builder()
-                .setHeader(Map.of("typ","JWT"))
+                .setHeader(Map.of("type","JWT"))
                 .setClaims(valueMap)
                 .setIssuedAt(Date.from(ZonedDateTime.now().toInstant()))
                 .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(validTime).toInstant()))
