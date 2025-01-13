@@ -1,0 +1,19 @@
+
+spring:
+  config:
+    import:
+      - classpath:/config/application/application-${spring.profiles.active}.yml
+  application:
+    name: back
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+logging:
+  config: classpath:/config/log4j2/log4j2-${spring.profiles.active}.xml
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+    com.gch.back: debug
