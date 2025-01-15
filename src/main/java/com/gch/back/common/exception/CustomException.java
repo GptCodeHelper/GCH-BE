@@ -1,4 +1,4 @@
-package com.gch.back.common;
+package com.gch.back.common.exception;
 
 
 import com.gch.back.dto.constant.ErrorCode;

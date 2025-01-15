@@ -1,4 +1,4 @@
-package com.gch.back.dto.oauth;
+package com.gch.back.dto.constant;
 
 public enum SocialType {
     NAVER,

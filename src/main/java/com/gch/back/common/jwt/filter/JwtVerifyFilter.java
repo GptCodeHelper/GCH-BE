@@ -21,7 +21,7 @@ import java.util.Map;
 
 @Slf4j
 public class JwtVerifyFilter extends OncePerRequestFilter {
-    private static final String[] whitelist = {"/signUp", "/login/*" , "/refresh", "/", "/index"};
+    private static final String[] whitelist = {"/signUp", "/login" , "/refresh", "/", "/index"};
 
     private static void checkAuthorizationHeader(String header) {
         if (header == null) {
@@ -39,7 +39,7 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         log.info("--------------------------- JwtVerifyFilter ---------------------------");
 
         String authHeader = request.getHeader(JwtConstants.JWT_HEADER);

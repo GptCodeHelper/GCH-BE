@@ -1,9 +1,9 @@
 package com.gch.back.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gch.back.common.exception.CustomException;
 import com.gch.back.dto.common.ExceptionDto;
 import jakarta.annotation.Nullable;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 
 public record ResponseUtil<T>(

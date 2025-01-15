@@ -1,11 +1,8 @@
 package com.gch.back.service;
 
 import com.gch.back.common.oAuth2.OAuthAttributes;
-import com.gch.back.dto.UserRole;
-import com.gch.back.dto.common.detail.PrincipalDetail;
 import com.gch.back.dto.oauth.CustomOAuth2User;
-import com.gch.back.dto.oauth.KakaoUserInfo;
-import com.gch.back.dto.oauth.SocialType;
+import com.gch.back.dto.constant.SocialType;
 import com.gch.back.entity.User;
 import com.gch.back.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
@@ -21,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @Service

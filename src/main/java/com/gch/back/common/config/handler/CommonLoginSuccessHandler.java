@@ -31,7 +31,7 @@ public class CommonLoginSuccessHandler implements AuthenticationSuccessHandler {
 
                 response.addHeader("accessToken", "Bearer " + accessToken);
                 response.addHeader("refreshToken", refreshToken);
-                response.sendRedirect("oauth2/sign-up"); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
+                response.sendRedirect("login/sign_up"); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
                 response.setContentType("application/json; charset=UTF-8");
 
             } else {

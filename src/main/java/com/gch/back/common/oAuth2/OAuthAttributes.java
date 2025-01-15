@@ -1,7 +1,7 @@
 package com.gch.back.common.oAuth2;
 
 import com.gch.back.dto.UserRole;
-import com.gch.back.dto.oauth.SocialType;
+import com.gch.back.dto.constant.SocialType;
 import com.gch.back.dto.oauth.KakaoUserInfo;
 import com.gch.back.dto.oauth.OAuth2UserInfo;
 import com.gch.back.entity.User;
