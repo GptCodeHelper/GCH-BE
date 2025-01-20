@@ -9,23 +9,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "USER_TB")
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends BaseEntity{
 
     @Id
-<<<<<<< HEAD
-    @GeneratedValue
-    @Column(name = "USER_NO")
-    private Integer userNo;
-=======
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_SEQ")
     private Integer userSeq;
->>>>>>> dev
-
-
     @Column(name = "USER_ID")
     private String userId;
     @Column(name = "USER_PW")
@@ -42,4 +34,30 @@ public class User extends BaseEntity{
     private String userYmd;
     @Column(name = "USER_CI")
     private String userCi;
+
+    // 점수 업데이트
+    public User withUpdateScore(Integer newScore, String chgId) {
+        User updated = this.toBuilder()
+                .userScore(newScore)
+                .build();
+        updated.updateAuditInfo(chgId);
+        return updated;
+    }
+
+    // 인증정보 업데이트
+    public User withUpdateAuthInfo(String userCi, String userYmd, String userNm, String userPhoneNo, String chgId) {
+        User updated = this.toBuilder()
+                .userCi(userCi)
+                .userYmd(userYmd)
+                .userNm(userNm)
+                .userPhoneNo(userPhoneNo)
+                .build();
+        updated.updateAuditInfo(chgId);
+        return updated;
+    }
+
+    // 감사 정보 업데이트
+    protected void updateAuditInfo(String chgId) {
+        this.updateAuditInfo(userId);
+    }
 }
