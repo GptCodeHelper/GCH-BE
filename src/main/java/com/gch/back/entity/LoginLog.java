@@ -1,15 +1,16 @@
 package com.gch.back.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "LOGIN_LOG_TB")
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class LoginLog extends BaseEntity{
 
     @Id

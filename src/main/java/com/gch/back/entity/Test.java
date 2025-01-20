@@ -1,13 +1,17 @@
 package com.gch.back.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "TEST_TB")
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Test extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

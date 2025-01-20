@@ -30,6 +30,8 @@ public class QProb extends EntityPathBase<Prob> {
 
     public final ListPath<Lan, QLan> lanProbs = this.<Lan, QLan>createList("lanProbs", Lan.class, QLan.class, PathInits.DIRECT2);
 
+    public final ListPath<ProbCon, QProbCon> probCons = this.<ProbCon, QProbCon>createList("probCons", ProbCon.class, QProbCon.class, PathInits.DIRECT2);
+
     public final NumberPath<Integer> probId = createNumber("probId", Integer.class);
 
     public final StringPath probTit = createString("probTit");
