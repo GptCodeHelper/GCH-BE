@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Prob extends BaseEntity{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PROB_ID")
     private Integer probId;
 

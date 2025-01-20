@@ -15,9 +15,15 @@ import lombok.NoArgsConstructor;
 public class User extends BaseEntity{
 
     @Id
+<<<<<<< HEAD
     @GeneratedValue
     @Column(name = "USER_NO")
     private Integer userNo;
+=======
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USER_SEQ")
+    private Integer userSeq;
+>>>>>>> dev
 
 
     @Column(name = "USER_ID")
