@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   profiles:
@@ -19,3 +19,20 @@ spring:
     properties:
       hibernate:
         format-sql: true
+
+  thymeleaf:
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    cache: false
+    encoding: UTF-8
+
+jwt:
+  secretKey: asodfuhaoiwefjhaiowjfioawjf
+  access:
+    expiration: 3600
+    header: Authorization
+  refresh:
+    expiration: 3600
+    header: Refresh

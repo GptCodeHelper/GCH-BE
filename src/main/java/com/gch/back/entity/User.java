@@ -40,4 +40,11 @@ public class User extends BaseEntity{
 
     @Column(name = "USER_ROLE")
     private UserRole userRole;
+
+    private String refreshToken;
+    private String password;
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }

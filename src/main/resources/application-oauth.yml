@@ -7,13 +7,12 @@ spring:
             authorization-uri: https://kauth.kakao.com/oauth/authorize
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
-            user-name-attribute: id
         registration:
           kakao:
-            client-id: ${client-id}
-            client-secret: ${client-secret}
+            client-id: baeb3e4e8b2e924686c27653a2e2e139
+            client-secret: G8jGXZ7J7f444jxlB5rHSbDI607tXYIT
             client-authentication-method: client_secret_post
-            redirect_uri: ${redirect_uri}
+            redirect_uri: http://localhost:8080/login/kakao/callback
             authorization-grant-type: authorization_code
             client-name: kakao
             scope:
