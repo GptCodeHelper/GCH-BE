@@ -60,7 +60,7 @@ public class JwtUtils {
                 .withSubject(ACCESS_TOKEN_SUBJECT)
                 .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod)) // 토큰 만료 시간 설정
                 .withClaim(EMAIL_CLAIM, email)
-                .withClaim(ROLE_CLAIM, role.name())
+                .withClaim(ROLE_CLAIM, "USER")
                 .sign(Algorithm.HMAC512(secretKey)); // HMAC512 알고리즘 사용, application-jwt.yml에서 지정한 secret 키로 암호화
     }
 
@@ -123,7 +123,7 @@ public class JwtUtils {
         response.setHeader(refreshHeader, refreshToken);
     }
 
-    public void updateRefreshToken(String email, String refreshToken) {
+    public void updateAccessToken(String email, String refreshToken) {
         userRepository.findByUserId(email)
                 .ifPresentOrElse(
                         user -> user.updateRefreshToken(refreshToken),
