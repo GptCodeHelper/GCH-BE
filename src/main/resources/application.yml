@@ -1,14 +1,26 @@
 spring:
+  profiles:
+    include: oauth
+
   config:
     import:
       - classpath:/config/application/application-${spring.profiles.active}.yml
   application:
     name: back
+
   jpa:
     properties:
       hibernate:
         format_sql: true
     show-sql: true
+
+  thymeleaf:
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    cache: false
+    encoding: UTF-8
 
 logging:
   config: classpath:/config/log4j2/log4j2-${spring.profiles.active}.xml
@@ -16,3 +28,12 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
     com.gch.back: debug
+    org.springframework.security: debug
+
+jwt:
+  access:
+    expiration: 3600
+    header: Authorization
+  refresh:
+    expiration: 3600
+    header: Refresh
