@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>테스트 로그인 페이지</title>
+</head>
+<body>
+<h1>테스트 로그인 페이지</h1>
+<form action="/v1/oauth/signup" method="post">
+    <div>
+        <label for="userId">User ID (Email):</label>
+        <input type="text" id="userId" name="userId" value="" readonly>
+    </div>
+    <div>
+        <label for="testInput">Password:</label>
+        <input type="password" id="testInput" name="testInput" value="">
+    </div>
+    <div>
+        <label for="userNm">User Name:</label>
+        <input type="text" id="userNm" name="userNm" value="" readonly>
+    </div>
+    <div>
+        <label for="userPhoneNo">User Phone No:</label>
+        <input type="tel" id="userPhoneNo" name="userPhoneNo" value="">
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    // URL의 쿼리 파라미터를 읽어서 객체로 반환하는 함수
+    function getQueryParams() {
+        const params = {};
+        const queryString = window.location.search.substring(1);
+        const pairs = queryString.split("&");
+        for (let i = 0; i < pairs.length; i++) {
+            const pair = pairs[i].split("=");
+            if (pair.length === 2) {
+                params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+            }
+        }
+        return params;
+    }
+
+    // 쿼리 파라미터에서 email과 name 값을 추출하여 필드에 설정
+    const params = getQueryParams();
+    if (params.email) {
+        document.getElementById("userId").value = params.email;
+    }
+    if (params.name) {
+        document.getElementById("userNm").value = params.name;
+    }
+</script>
+</body>
+</html>

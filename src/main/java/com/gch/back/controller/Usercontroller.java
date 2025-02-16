@@ -31,8 +31,13 @@ public class Usercontroller {
         return "login";
     }
 
-    @PostMapping("/join")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
-        return userService.saveUser(user);
+    @GetMapping("/signup")
+    public String signUpPageTest() {
+        return "signup";
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(UserRequestDto request) {
+        return userService.saveUser(request);
     }
 }

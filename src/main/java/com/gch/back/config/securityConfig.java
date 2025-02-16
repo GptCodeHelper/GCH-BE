@@ -32,11 +32,8 @@ public class securityConfig {
             .authorizeHttpRequests(authorize -> authorize
                     // 메인, oauth login, 회원가입 엔드포인트는 permit
                     .requestMatchers("/",
-                            "/v1/oauth/login",
-                            "/login/oauth2/code/kakao",
-                            "/v1/oauth/login/kakao",
-                            "/v1/oauth/join",
-                            "/oauth/login/kakao",
+                            "/v1/oauth/*",
+                            "/login/*",
                             "/error")
                     .permitAll()
                     // 그 외 요청은 인증 필요

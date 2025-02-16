@@ -8,6 +8,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -49,6 +51,17 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         // DB에 해당 email이 존재하는지 확인
         Optional<User> userOptional = userRepository.findByUserId(email);
 
+        CustomOAuth2User customUser = new CustomOAuth2User(oAuth2User);
+        String customUsername = customUser.getUsername();
+        System.out.println("CustomOAuth2User.getUsername(): " + customUsername);
+
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(
+                customUser, authentication.getCredentials(), authentication.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+
+        // 인증 객체가 null이 아니라면 SecurityContext에 설정
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+
         if (userOptional.isPresent()) {
             // 기존 회원인 경우 JWT 생성 후 헤더에 추가
             String token = jwtTokenProvider.generateToken(email);
@@ -58,7 +71,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         } else {
             // 신규 사용자: FE에서 추가 정보 입력받을 수 있도록 oauth 정보를 전달
             // 예시: FE의 회원가입 페이지 (/signup)로 email, name을 쿼리 파라미터로 전달
-            String redirectUrl = "/signup?email=" + encodedEmail + "&name=" + encodedName;
+            String redirectUrl = "/v1/oauth/signup?email=" + encodedEmail + "&name=" + encodedName;
             response.sendRedirect(redirectUrl);
         }
     }
