@@ -2,10 +2,10 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>테스트 로그인 페이지</title>
+    <title>테스트 회원가입 페이지</title>
 </head>
 <body>
-<h1>테스트 로그인 페이지</h1>
+<h1>테스트 회원가입 페이지</h1>
 <form action="/v1/oauth/signup" method="post">
     <div>
         <label for="userId">User ID (Email):</label>
@@ -23,6 +23,10 @@
         <label for="userPhoneNo">User Phone No:</label>
         <input type="tel" id="userPhoneNo" name="userPhoneNo" value="">
     </div>
+    <!--
+         만약 Spring Security CSRF가 활성화되어 있다면 아래 hidden input을 추가하세요.
+         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    -->
     <button type="submit">Submit</button>
 </form>
 

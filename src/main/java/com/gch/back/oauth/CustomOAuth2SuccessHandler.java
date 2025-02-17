@@ -59,9 +59,6 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
                 customUser, authentication.getCredentials(), authentication.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(newAuth);
 
-        // 인증 객체가 null이 아니라면 SecurityContext에 설정
-        SecurityContextHolder.getContext().setAuthentication(newAuth);
-
         if (userOptional.isPresent()) {
             // 기존 회원인 경우 JWT 생성 후 헤더에 추가
             String token = jwtTokenProvider.generateToken(email);

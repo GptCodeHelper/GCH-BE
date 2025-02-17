@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     public ResponseEntity<?> saveUser(UserRequestDto request) {
 
@@ -23,7 +26,7 @@ public class UserServiceImpl implements UserService {
                 User.builder()
                         .userId(request.getUserId())
                         .userNm(request.getUserNm())
-                        .testInput(request.getTestInput())
+                        .testInput(passwordEncoder.encode(request.getTestInput()))
                         .userPhoneNo(request.getUserPhoneNo())
                         .build()
         );
