@@ -8,11 +8,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        use_sql_comments: true
     show-sql: true
+
 
 logging:
   config: classpath:/config/log4j2/log4j2-${spring.profiles.active}.xml
   level:
-    org.hibernate.SQL: debug
-    org.hibernate.type: trace
-    com.gch.back: debug
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE
+    com.querydsl.jpa: DEBUG
+    com.gch.back: DEBUG

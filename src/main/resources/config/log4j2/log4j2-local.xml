@@ -28,6 +28,12 @@
             <AppenderRef ref="FileLog"/>
         </Root>
 
+        <!-- QueryDSL 로거 -->
+        <Logger name="com.querydsl.jpa" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+
         <Logger name="com.gch.back" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="FileLog"/>

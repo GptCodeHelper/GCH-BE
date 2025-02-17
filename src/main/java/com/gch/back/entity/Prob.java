@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "PROB_TB")
@@ -24,10 +26,12 @@ public class Prob extends BaseEntity{
     @Column(name = "PROB_TIT")
     private String probTit;
 
+    @Builder.Default
     @OneToMany(mappedBy = "prob")
-    private List<Lan> lanProbs = new ArrayList<Lan>();
+    private Set<Lan> lanProbs = new HashSet<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "prob")
-    private List<ProbCon> probCons = new ArrayList<ProbCon>();
+    private Set<ProbCon> probCons = new HashSet<>();
 
 }

@@ -1,4 +1,4 @@
-package com.gch.back.dto.user;
+package com.gch.back.dto.prob;
 
 import com.gch.back.entity.Lan;
 import com.gch.back.entity.Prob;
