@@ -18,7 +18,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     // 보호가 필요 없는 URL 리스트
     private static final List<String> EXCLUDED_URLS = List.of(
-            "/",
             "/login",
             "/v1/oauth",
             "/oauth/login/kakao",
@@ -40,11 +39,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        String token = tokenProvider.getAccessToken(request).orElseThrow();
+        String token = tokenProvider.getAccessToken(request).orElse(null);
+        logger.info("token : " + token);
+
 
         if (tokenProvider.validateToken(token)) {
+            logger.info("Token is Validated");
             String email = tokenProvider.getEmailFromJWT(token);
-            // 여기서는 권한(roles) 처리 없이 username만 설정합니다.
+
             Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, null);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

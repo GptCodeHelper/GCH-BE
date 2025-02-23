@@ -2,6 +2,7 @@ package com.gch.back.oauth;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.Optional;
@@ -18,7 +20,9 @@ import java.util.Optional;
 @Component
 public class JwtTokenProvider {
     private static final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class);
-    private final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+
+    @Value("${jwt.secret}")
+    private String SECRET_KEY;
 
     @Value("${jwt.access.expiration}")
     private long ACCESS_TOKEN_EXPIRATION; // 30분
@@ -28,11 +32,27 @@ public class JwtTokenProvider {
 
     private static final String TOKEN_START_STRING = "Bearer ";
 
+    private Key getSigningKey() {
+        // jwtSecret 문자열을 바이트 배열로 변환하여 일관된 HMAC SHA 키 생성
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+    }
+
     // Access Token 불러오기
     public Optional<String> getAccessToken(HttpServletRequest request) {
-        return Optional.ofNullable(request.getHeader(ACCESS_HEADER))
-                .filter(refreshToken -> refreshToken.startsWith(TOKEN_START_STRING))
-                .map(refreshToken -> refreshToken.replace(TOKEN_START_STRING, ""));
+        // 1. 쿠키에서 "accessToken" 찾기
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("accessToken".equals(cookie.getName())) {
+                    return Optional.of(cookie.getValue());
+                }
+            }
+        }
+        // 2. 헤더에서 "Authorization" 찾기
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return Optional.of(bearerToken.substring("Bearer ".length()));
+        }
+        return Optional.empty();
     }
 
     public String getEmailFromToken(String accessToken) {
@@ -74,7 +94,7 @@ public class JwtTokenProvider {
                 .setSubject(username)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .signWith(SignatureAlgorithm.HS512, getSigningKey())
                 .compact();
     }
 
@@ -86,13 +106,13 @@ public class JwtTokenProvider {
                 .setSubject(email)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .signWith(SignatureAlgorithm.HS512, getSigningKey())
                 .compact();
     }
 
     public String getEmailFromJWT(String token) {
         return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(getSigningKey())
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
@@ -100,13 +120,17 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(authToken);
+            Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .setAllowedClockSkewSeconds(60)
+                    .build()
+                    .parseClaimsJws(authToken);
             return true;
         } catch (SignatureException | MalformedJwtException | ExpiredJwtException
                  | UnsupportedJwtException | IllegalArgumentException ex) {
-            // 로깅 처리 가능
+            log.info("Error" + ex);
+            return false;
         }
-        return false;
     }
 }
 

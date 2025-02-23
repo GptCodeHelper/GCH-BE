@@ -1,24 +1,20 @@
 package com.gch.back.controller;
 
 import com.gch.back.dto.user.UserRequestDto;
-import com.gch.back.entity.User;
-import com.gch.back.oauth.JwtTokenProvider;
-import com.gch.back.repository.UserRepository;
 import com.gch.back.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/v1/oauth")
 @RequiredArgsConstructor
-public class Usercontroller {
-    private static final Logger log = LoggerFactory.getLogger(Usercontroller.class);
+public class OauthController {
+    private static final Logger log = LoggerFactory.getLogger(OauthController.class);
     private final UserService userService;
 
     @GetMapping("/")
@@ -37,7 +33,7 @@ public class Usercontroller {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@ModelAttribute UserRequestDto request) {
-        return userService.saveUser(request);
+    public ResponseEntity<?> registerUser(@ModelAttribute UserRequestDto request, HttpServletResponse response) {
+        return userService.saveUser(request, response);
     }
 }

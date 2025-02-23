@@ -18,7 +18,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
         } else {
             // JWT가 없거나 유효하지 않을 경우 로그인 페이지로 리다이렉트
-            response.sendRedirect("/v1/oauth/login");
+            response.sendRedirect("https://localhost:3000/login");
         }
     }
 }

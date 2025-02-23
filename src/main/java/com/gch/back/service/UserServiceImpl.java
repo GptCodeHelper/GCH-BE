@@ -1,14 +1,17 @@
 package com.gch.back.service;
 
 import com.gch.back.dto.user.UserRequestDto;
+import com.gch.back.dto.user.UserResponseDto;
 import com.gch.back.entity.User;
 import com.gch.back.oauth.JwtTokenProvider;
 import com.gch.back.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import jakarta.servlet.http.Cookie;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public ResponseEntity<?> saveUser(UserRequestDto request) {
+    public ResponseEntity<?> saveUser(UserRequestDto request, HttpServletResponse response) {
 
         User savedUser = userRepository.save(
                 User.builder()
@@ -33,8 +36,21 @@ public class UserServiceImpl implements UserService {
 
         String token = jwtTokenProvider.generateToken(savedUser.getUserId());
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + token);
-        return ResponseEntity.ok().headers(headers).body("User registered successfully");
+        Cookie cookie = new Cookie("accessToken", token);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok().body("{\"SuccessYn\": \"" + "Y" + "\"}");
+    }
+
+    @Override
+    public UserResponseDto retrieveUserInfo(@AuthenticationPrincipal String email) {
+        User userRst = userRepository.findByUserId(email).orElseThrow();
+
+        return UserResponseDto.builder()
+                .userId(userRst.getUserId())
+                .userNm(userRst.getUserNm())
+                .build();
     }
 }

@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import com.gch.back.entity.User;
 import com.gch.back.repository.UserRepository;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -59,16 +60,17 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
                 customUser, authentication.getCredentials(), authentication.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(newAuth);
 
+        System.out.println("authentication : " + authentication);
+
         if (userOptional.isPresent()) {
-            // 기존 회원인 경우 JWT 생성 후 헤더에 추가
             String token = jwtTokenProvider.generateToken(email);
-            response.addHeader("Authorization", "Bearer " + token);
-            // 메인 페이지로 리다이렉트
-            response.sendRedirect("/");
+            Cookie cookie = new Cookie("accessToken", token);
+            cookie.setHttpOnly(true);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+            response.sendRedirect("http://localhost:3000/");
         } else {
-            // 신규 사용자: FE에서 추가 정보 입력받을 수 있도록 oauth 정보를 전달
-            // 예시: FE의 회원가입 페이지 (/signup)로 email, name을 쿼리 파라미터로 전달
-            String redirectUrl = "/v1/oauth/signup?email=" + encodedEmail + "&name=" + encodedName;
+            String redirectUrl = "http://localhost:3000/signup?email=" + encodedEmail + "&name=" + encodedName;
             response.sendRedirect(redirectUrl);
         }
     }

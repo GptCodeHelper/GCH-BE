@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -41,6 +43,7 @@ public class securityConfig {
                     // 그 외 요청은 인증 필요
                     .anyRequest().authenticated()
             )
+            .cors(withDefaults())
             // JWT 인증 실패 시, 로그인 페이지로 리다이렉트
             .exceptionHandling(exception -> exception
                     .authenticationEntryPoint(new JwtAuthenticationEntryPoint())

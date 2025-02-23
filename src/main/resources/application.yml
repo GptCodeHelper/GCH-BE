@@ -31,9 +31,10 @@ logging:
     org.springframework.security: debug
 
 jwt:
+  secret: dsaonvafiweohvoiawejvpoaweijvaewfiuahweiufhaweiufohaiouefvhaiuhfvaowiejfaewafwioefjaiqewfjiauwhbfiahifuhawiuefhaiwuohef
   access:
-    expiration: 3600
+    expiration: 1800000
     header: Authorization
   refresh:
-    expiration: 3600
+    expiration: 1800000
     header: Refresh
