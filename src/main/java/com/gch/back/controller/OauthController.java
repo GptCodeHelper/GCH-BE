@@ -2,6 +2,7 @@ package com.gch.back.controller;
 
 import com.gch.back.dto.user.UserRequestDto;
 import com.gch.back.service.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -25,6 +26,17 @@ public class OauthController {
     @GetMapping("/login")
     public String loginPageTest() {
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("accessToken", null);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok("Logged out");
     }
 
     @GetMapping("/signup")

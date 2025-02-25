@@ -38,6 +38,7 @@ public class securityConfig {
                     .requestMatchers("/",
                             "/v1/oauth/*",
                             "/login/*",
+                            "/logout/*",
                             "/error")
                     .permitAll()
                     // 그 외 요청은 인증 필요
