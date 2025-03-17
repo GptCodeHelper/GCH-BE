@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
-    ResponseEntity<?> saveUser(UserRequestDto request, HttpServletResponse response);
+    void saveUser(UserRequestDto request, HttpServletResponse response);
 
     UserResponseDto retrieveUserInfo(@AuthenticationPrincipal String email);
 }

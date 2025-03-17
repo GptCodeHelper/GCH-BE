@@ -8,6 +8,7 @@ import com.gch.back.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import jakarta.servlet.http.Cookie;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public ResponseEntity<?> saveUser(UserRequestDto request, HttpServletResponse response) {
+    public void saveUser(UserRequestDto request, HttpServletResponse response) {
 
         User savedUser = userRepository.save(
                 User.builder()
@@ -40,8 +42,6 @@ public class UserServiceImpl implements UserService {
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         response.addCookie(cookie);
-
-        return ResponseEntity.ok().body("{\"SuccessYn\": \"" + "Y" + "\"}");
     }
 
     @Override

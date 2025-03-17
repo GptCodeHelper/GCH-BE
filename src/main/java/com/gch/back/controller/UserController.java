@@ -1,7 +1,8 @@
 package com.gch.back.controller;
 
+import com.gch.back.common.ResponseUtil;
+import com.gch.back.dto.common.ResponseData;
 import com.gch.back.dto.user.UserResponseDto;
-import com.gch.back.oauth.CustomOAuth2User;
 import com.gch.back.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/userinfo")
-    public ResponseEntity<?> retrieveUserInfo(@AuthenticationPrincipal String email) {
+    public ResponseEntity<ResponseData> retrieveUserInfo(@AuthenticationPrincipal String email) {
         UserResponseDto response = userService.retrieveUserInfo(email);
 
-        return ResponseEntity.ok(response);
+        return ResponseUtil.createSuccessData(response);
     }
 }
