@@ -18,16 +18,6 @@ public class OauthController {
     private static final Logger log = LoggerFactory.getLogger(OauthController.class);
     private final UserService userService;
 
-    @GetMapping("/")
-    public String mainPageTest() {
-        return "index";
-    }
-
-    @GetMapping("/login")
-    public String loginPageTest() {
-        return "login";
-    }
-
     @GetMapping("/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {
         Cookie cookie = new Cookie("accessToken", null);
