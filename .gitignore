@@ -69,7 +69,6 @@ replay_pid*
 # Properties files
 *.properties
 !gradle-wrapper.properties
-application-*.yml
 !application.yml
 application-*.properties
 !application.properties
