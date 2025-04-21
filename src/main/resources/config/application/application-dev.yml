@@ -4,9 +4,25 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/GCH_MGR?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/GCH_MGR?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
     username: GCH_MGR
     password: Jaehyun1!
   jpa:
     hibernate:
       ddl-auto: update
+      
+  # Kafka Configuration
+  kafka:
+    bootstrap-servers: kafka-dev-server:9092
+    consumer:
+      group-id: gch-dev-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    topics:
+      main: gch-dev-topic
+      retry: gch-dev-retry-topic
+      dead: gch-dev-dlt-topic

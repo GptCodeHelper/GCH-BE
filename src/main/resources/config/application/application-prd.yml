@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/GCH_MGR?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/GCH_MGR?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
     username: GCH_MGR
     password: Jaehyun1!
   jpa:
@@ -14,3 +14,27 @@ spring:
     properties:
       hibernate:
         format_sql: false
+        
+  # Kafka Configuration
+  kafka:
+    bootstrap-servers: kafka-prd-server-1:9092,kafka-prd-server-2:9092,kafka-prd-server-3:9092
+    consumer:
+      group-id: gch-prd-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      enable-auto-commit: false
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      retries: 3
+      enable-idempotence: true
+    topics:
+      main: gch-prd-topic
+      retry: gch-prd-retry-topic
+      dead: gch-prd-dlt-topic
+    properties:
+      security.protocol: SASL_SSL
+      sasl.mechanism: PLAIN
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${KAFKA_USERNAME}" password="${KAFKA_PASSWORD}";
