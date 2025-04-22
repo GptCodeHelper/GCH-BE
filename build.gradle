@@ -40,6 +40,8 @@ dependencies {
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
+	implementation 'org.springframework.kafka:spring-kafka'
+
 	// Spring Boot의 기본 로깅 제외
 	configurations {
 		all*.exclude module: 'spring-boot-starter-logging'
@@ -63,20 +65,26 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-// QueryDSL Q클래스 생성 위치 지정
-def querydslDir = "src/main/generated/querydsl"
+// Querydsl 설정 부분 개선
+def querydslSrcDir = 'src/main/generated/querydsl'
 
-// QueryDSL Q클래스 생성 위치를 지정
 sourceSets {
-	main.java.srcDir querydslDir
+    main {
+        java {
+            srcDirs += [ querydslSrcDir ]
+        }
+    }
 }
 
-// QueryDSL Q클래스 생성 설정
 tasks.withType(JavaCompile) {
-	options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
+    options.annotationProcessorGeneratedSourcesDirectory = file(querydslSrcDir)
 }
 
-// clean 시에 생성된 Q클래스 삭제
 clean {
-	delete file(querydslDir)
+    delete file(querydslSrcDir)
+}
+
+// Querydsl 생성 스킵할 클래스 지정 (선택적)
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Aquerydsl.excludedPackages=com.querydsl.core"
 }
