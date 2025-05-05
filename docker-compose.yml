@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: gch_localdb
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Jaehyun1!
+      MYSQL_DATABASE: GCH_MGR
+      MYSQL_USER: GCH_MGR
+      MYSQL_PASSWORD: Jaehyun1!
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+    driver: local
