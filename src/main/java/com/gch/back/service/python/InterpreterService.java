@@ -1,7 +1,10 @@
-package com.gch.back.service.codeExecution;
+package com.gch.back.service.python;
 
 import com.gch.back.dto.common.CommonConstants;
-import com.gch.back.repository.codeExecution.PythonExecutionRepository;
+import com.gch.back.dto.sub.SaveSubConRequestDto;
+import com.gch.back.dto.sub.SubConRequestDto;
+import com.gch.back.entity.SubCon;
+import com.gch.back.repository.python.SubConRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +17,19 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class PythonExecutionService {
-    private final PythonExecutionRepository pythonExecuteRepository;
+public class InterpreterService {
+    private final SubConRepository subConRepository;
+
+    public SubCon saveDetail(SaveSubConRequestDto request) {
+        String code = request.getCode();
+        Map<String, String> testCases = request.getTestCases();
+
+        SubCon subConRequest = SubCon.builder()
+                .subConCode(code)
+                .build();
+
+        return subConRepository.save(subConRequest);
+    }
 
     public boolean compileCode(String code) {
         try {

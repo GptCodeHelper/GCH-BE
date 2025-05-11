@@ -13,7 +13,7 @@ spring:
       
   # Kafka Configuration
   kafka:
-    bootstrap-servers: kafka-dev-server:9092
+    bootstrap-servers: localhost:9092
     consumer:
       group-id: gch-dev-group
       auto-offset-reset: earliest
